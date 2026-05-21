@@ -1,7 +1,0 @@
--inscription d'un compte
--connextion d'un compte
--ajout de commentaire
--inspecter un utilisateur
--ajouter une bio
--faire un plus beau css
--ajouter une barre de recherche que ce soit pour des posts ou pour des comptes
