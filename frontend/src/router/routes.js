@@ -18,6 +18,11 @@ const routes = [
   {
     path: '/create',
     component: () => import('pages/CreatePostPage.vue')
+  },
+
+  {
+    path: '/profile/:id',
+    component: () => import('pages/ProfilePage.vue')
   }
 
 ]

@@ -8,6 +8,15 @@ $username = $data->username;
 $email = $data->email;
 $password = password_hash($data->password, PASSWORD_DEFAULT);
 
+// Vérifier si l'email est déjà utilisé
+$check = $pdo->prepare("SELECT id FROM users WHERE email = ?");
+$check->execute([$email]);
+
+if ($check->fetch()) {
+    echo json_encode(["error" => "Cet email est déjà utilisé."]);
+    exit;
+}
+
 $sql = "
 INSERT INTO users(username, email, password)
 VALUES (?, ?, ?)

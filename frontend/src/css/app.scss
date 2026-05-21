@@ -1,1 +1,61 @@
 // app global css
+
+body {
+  background: #080810;
+  color: #e2e8f0;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+}
+
+.xp-card {
+  background: #12121f;
+  border: 1px solid #2d1f6e;
+  border-radius: 12px;
+  transition: border-color 0.2s;
+
+  &:hover {
+    border-color: #7c3aed;
+  }
+}
+
+.xp-header {
+  background: #0a0a16;
+  border-bottom: 1px solid #2d1f6e;
+}
+
+.xp-logo {
+  font-size: 1.6rem;
+  font-weight: 900;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, #7c3aed, #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.xp-username {
+  color: #a855f7;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+
+  &:hover {
+    color: #c084fc;
+  }
+}
+
+.xp-btn {
+  border-radius: 8px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.xp-tag {
+  background: #2d1f6e;
+  color: #c084fc;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
