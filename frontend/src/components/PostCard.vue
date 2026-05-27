@@ -124,7 +124,7 @@ function formatDate(dt) {
 
 async function loadComments() {
   const response = await fetch(
-    'http://localhost/adam/xpulse/backend/get_comments.php?post_id=' + props.post.id
+    'http://localhost/xpluse/xpulse/backend/get_comments.php?post_id=' + props.post.id
   )
   comments.value = await response.json()
 }
@@ -137,7 +137,7 @@ async function toggleComments() {
 async function addComment() {
   if (!newComment.value.trim()) return
 
-  await fetch('http://localhost/adam/xpulse/backend/add_comment.php', {
+  await fetch('http://localhost/xpluse/xpulse/backend/add_comment.php', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({

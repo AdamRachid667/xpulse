@@ -99,18 +99,22 @@ async function createPost() {
 
   loading.value = true
 
-  await fetch('http://localhost/adam/xpulse/backend/create_post.php', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      title: title.value,
-      content: content.value,
-      user_id: currentUser.value.id
+  try {
+    await fetch('http://localhost/xpluse/xpulse/backend/create_post.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: title.value,
+        content: content.value,
+        user_id: currentUser.value.id
+      })
     })
-  })
-
-  loading.value = false
-  router.push('/')
+    router.push('/')
+  } catch {
+    errorMsg.value = 'Erreur de connexion au serveur.'
+  } finally {
+    loading.value = false
+  }
 }
 
 onMounted(() => {

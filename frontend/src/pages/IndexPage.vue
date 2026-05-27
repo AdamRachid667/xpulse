@@ -152,15 +152,16 @@ function goProfile(userId) {
 }
 
 async function getPosts() {
-  const response = await fetch('http://localhost/adam/xpulse/backend/get_posts.php')
+  const response = await fetch('http://localhost/xpluse/xpulse/backend/get_posts.php')
   posts.value = await response.json()
 }
 
 async function likePost(id) {
-  await fetch('http://localhost/adam/xpulse/backend/like.php', {
+  if (!currentUser.value) return
+  await fetch('http://localhost/xpluse/xpulse/backend/like.php', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ id })
+    body: JSON.stringify({ post_id: id, user_id: currentUser.value.id })
   })
   getPosts()
 }
@@ -169,7 +170,7 @@ async function search() {
   const q = searchQuery.value.trim()
   if (!q) return
   lastQuery.value = q
-  const response = await fetch('http://localhost/adam/xpulse/backend/search.php?q=' + encodeURIComponent(q))
+  const response = await fetch('http://localhost/xpluse/xpulse/backend/search.php?q=' + encodeURIComponent(q))
   searchResults.value = await response.json()
   searchMode.value = true
 }

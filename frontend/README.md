@@ -1,6 +1,6 @@
-# Xpluse PFA (xpulse-pfa)
+# Quasar App (quasar-project)
 
-Projet de Fin d'Année
+A Quasar Project
 
 ## Install the dependencies
 

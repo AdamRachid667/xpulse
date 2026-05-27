@@ -103,27 +103,32 @@ async function register() {
 
   loading.value = true
 
-  const response = await fetch(
-    'http://localhost/adam/xpulse/backend/register.php',
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        username: username.value,
-        email: email.value,
-        password: password.value
-      })
+  try {
+    const response = await fetch(
+      'http://localhost/xpluse/xpulse/backend/register.php',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          username: username.value,
+          email: email.value,
+          password: password.value
+        })
+      }
+    )
+
+    const data = await response.json()
+
+    if (data.error) {
+      errorMsg.value = data.error
+    } else {
+      successMsg.value = 'Compte créé ! Redirection...'
+      setTimeout(() => router.push('/login'), 1500)
     }
-  )
-
-  const data = await response.json()
-  loading.value = false
-
-  if (data.error) {
-    errorMsg.value = data.error
-  } else {
-    successMsg.value = 'Compte créé ! Redirection...'
-    setTimeout(() => router.push('/login'), 1500)
+  } catch {
+    errorMsg.value = 'Erreur de connexion au serveur.'
+  } finally {
+    loading.value = false
   }
 }
 

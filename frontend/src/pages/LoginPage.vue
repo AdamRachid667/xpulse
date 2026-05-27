@@ -84,26 +84,31 @@ async function login() {
 
   loading.value = true
 
-  const response = await fetch(
-    'http://localhost/adam/xpulse/backend/login.php',
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email: email.value,
-        password: password.value
-      })
+  try {
+    const response = await fetch(
+      'http://localhost/xpluse/xpulse/backend/login.php',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: email.value,
+          password: password.value
+        })
+      }
+    )
+
+    const data = await response.json()
+
+    if (data.success) {
+      localStorage.setItem('user', JSON.stringify(data.user))
+      router.push('/')
+    } else {
+      errorMsg.value = 'Email ou mot de passe incorrect.'
     }
-  )
-
-  const data = await response.json()
-  loading.value = false
-
-  if (data.success) {
-    localStorage.setItem('user', JSON.stringify(data.user))
-    router.push('/')
-  } else {
-    errorMsg.value = 'Email ou mot de passe incorrect.'
+  } catch {
+    errorMsg.value = 'Erreur de connexion au serveur.'
+  } finally {
+    loading.value = false
   }
 }
 

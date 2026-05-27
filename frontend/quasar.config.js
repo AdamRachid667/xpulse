@@ -204,7 +204,7 @@ export default defineConfig((ctx) => {
       builder: {
         // https://www.electron.build/configuration
 
-        appId: 'xpulse-pfa',
+        appId: 'quasar-project',
       },
     },
 
