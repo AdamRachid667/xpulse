@@ -2,11 +2,12 @@
 
 include "db.php";
 
+// Récupère tous les posts avec le nom d'utilisateur, triés par date décroissante
 $sql = "
 SELECT posts.*, users.username
 FROM posts
 JOIN users ON posts.user_id = users.id
-ORDER BY created_at DESC
+ORDER BY posts.created_at DESC
 ";
 
 $posts = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);

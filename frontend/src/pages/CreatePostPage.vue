@@ -50,10 +50,30 @@
             type="textarea"
             v-model="content"
             label="Contenu"
-            class="xp-input q-mb-lg"
+            class="xp-input q-mb-md"
             autogrow
             rows="4"
           />
+
+          <!-- Image optionnelle -->
+          <q-file
+            filled
+            dark
+            v-model="imageFile"
+            label="Image (optionnelle)"
+            accept="image/*"
+            class="xp-input q-mb-md"
+            clearable
+          >
+            <template #prepend>
+              <q-icon name="image" color="purple" />
+            </template>
+          </q-file>
+
+          <!-- Aperçu de l'image -->
+          <div v-if="imagePreview" class="q-mb-lg">
+            <img :src="imagePreview" style="max-width:100%; border-radius:10px; max-height:300px; object-fit:cover;" />
+          </div>
 
           <q-btn
             color="primary"
@@ -77,7 +97,7 @@
 
 <script setup>
 
-import { ref, onMounted } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -87,6 +107,16 @@ const content = ref('')
 const errorMsg = ref('')
 const loading = ref(false)
 const currentUser = ref(null)
+const imageFile = ref(null)
+const imagePreview = ref(null)
+
+// Génère un aperçu quand l'utilisateur choisit une image
+watch(imageFile, (file) => {
+  if (!file) { imagePreview.value = null; return }
+  const reader = new FileReader()
+  reader.onload = (e) => { imagePreview.value = e.target.result }
+  reader.readAsDataURL(file)
+})
 
 async function createPost() {
 
@@ -100,14 +130,16 @@ async function createPost() {
   loading.value = true
 
   try {
+    // Utilise FormData pour pouvoir envoyer l'image en même temps
+    const formData = new FormData()
+    formData.append('title', title.value)
+    formData.append('content', content.value)
+    formData.append('user_id', currentUser.value.id)
+    if (imageFile.value) formData.append('image', imageFile.value)
+
     await fetch('http://localhost/xpluse/xpulse/backend/create_post.php', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        title: title.value,
-        content: content.value,
-        user_id: currentUser.value.id
-      })
+      body: formData
     })
     router.push('/')
   } catch {

@@ -152,7 +152,7 @@ function startEdit() {
 async function saveBio() {
   savingBio.value = true
 
-  await fetch('http://localhost/adam/xpulse/backend/update_bio.php', {
+  await fetch('http://localhost/xpluse/xpulse/backend/update_bio.php', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -168,7 +168,7 @@ async function saveBio() {
 
 async function loadProfile() {
   const response = await fetch(
-    'http://localhost/adam/xpulse/backend/get_profile.php?user_id=' + route.params.id
+    'http://localhost/xpluse/xpulse/backend/get_profile.php?user_id=' + route.params.id
   )
   profileData.value = await response.json()
 }

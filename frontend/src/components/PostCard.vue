@@ -21,8 +21,16 @@
   <div class="text-white q-mb-xs" style="font-weight:700; font-size:1.05rem;">
     {{ post.title }}
   </div>
-  <div class="text-grey-4 q-mb-md" style="font-size:0.92rem; line-height:1.5;">
+  <div class="text-grey-4 q-mb-sm" style="font-size:0.92rem; line-height:1.5;">
     {{ post.content }}
+  </div>
+
+  <!-- Image optionnelle du post -->
+  <div v-if="post.image" class="q-mb-md">
+    <img
+      :src="'http://localhost/xpluse/xpulse/backend/' + post.image"
+      style="max-width:100%; border-radius:10px; max-height:400px; object-fit:cover;"
+    />
   </div>
 
   <!-- Actions -->

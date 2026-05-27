@@ -33,6 +33,7 @@ CREATE TABLE IF NOT EXISTS posts (
   user_id        INT UNSIGNED   NOT NULL,
   title          VARCHAR(255)   NOT NULL,
   content        TEXT           NOT NULL,
+  image          VARCHAR(255)   DEFAULT NULL,
   likes          INT UNSIGNED   NOT NULL DEFAULT 0,
   comments_count INT UNSIGNED   NOT NULL DEFAULT 0,
   created_at     DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP,

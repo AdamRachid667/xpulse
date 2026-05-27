@@ -107,12 +107,34 @@
   <!-- Feed normal -->
   <div v-else class="q-pa-md" style="max-width:700px; margin:0 auto;">
 
-    <div v-if="posts.length === 0" class="text-center q-mt-xl text-grey-6">
+    <!-- Tri -->
+    <div class="row q-mb-md q-gutter-sm">
+      <q-btn
+        :flat="sortMode !== 'date'"
+        :color="sortMode === 'date' ? 'purple' : 'grey-6'"
+        dense
+        label="Plus récents"
+        icon="schedule"
+        class="xp-btn"
+        @click="setSort('date')"
+      />
+      <q-btn
+        :flat="sortMode !== 'likes'"
+        :color="sortMode === 'likes' ? 'purple' : 'grey-6'"
+        dense
+        label="Top likes"
+        icon="thumb_up"
+        class="xp-btn"
+        @click="setSort('likes')"
+      />
+    </div>
+
+    <div v-if="sortedPosts.length === 0" class="text-center q-mt-xl text-grey-6">
       Aucun post pour l'instant.
     </div>
 
     <PostCard
-      v-for="post in posts"
+      v-for="post in sortedPosts"
       :key="post.id"
       :post="post"
       :current-user="currentUser"
@@ -128,7 +150,7 @@
 
 <script setup>
 
-import { ref, onMounted, defineAsyncComponent } from 'vue'
+import { ref, computed, onMounted, defineAsyncComponent } from 'vue'
 import { useRouter } from 'vue-router'
 
 const PostCard = defineAsyncComponent(() => import('components/PostCard.vue'))
@@ -141,6 +163,30 @@ const searchQuery = ref('')
 const searchMode = ref(false)
 const lastQuery = ref('')
 const searchResults = ref({ posts: [], users: [] })
+const sortMode = ref('date')
+
+// Algorithme de tri : date (chronologique) ou likes (popularité)
+const sortedPosts = computed(() => {
+  const arr = [...posts.value]
+  if (sortMode.value === 'likes') {
+    // Tri par nombre de likes décroissant (bubble sort)
+    for (let i = 0; i < arr.length - 1; i++) {
+      for (let j = 0; j < arr.length - 1 - i; j++) {
+        if (Number(arr[j].likes) < Number(arr[j + 1].likes)) {
+          const tmp = arr[j]
+          arr[j] = arr[j + 1]
+          arr[j + 1] = tmp
+        }
+      }
+    }
+  }
+  // Par défaut : déjà triés par date DESC depuis le serveur
+  return arr
+})
+
+function setSort(mode) {
+  sortMode.value = mode
+}
 
 function logout() {
   localStorage.removeItem('user')
